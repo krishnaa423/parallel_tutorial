@@ -1,1 +1,1 @@
-Parallel programming tutorial with MPI and CUDA.
+Parallel programming tutorial with MPI. 
