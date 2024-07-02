@@ -1,6 +1,6 @@
 
 # Some variables. 
-array_size = 100
+array_size = 10000000
 task_sizes = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
@@ -20,15 +20,18 @@ def add_array(array_size, comm: MPI.Comm):
     else:
         a = np.zeros(array_size, dtype='f8')
     b = np.zeros(array_size, dtype='f8')
-    c = np.zeros(array_size, dtype='f8')
+    c = np.zeros(1, dtype='f8')
+    sum = np.zeros(1, dtype='f8')
     
-    start_time = time.time()
+    start_time = MPI.Wtime()
     comm.Scatterv(a, b, root=0)
-    comm.Allreduce(b, c, op=MPI.SUM)
+    c[0] = np.sum(b)
+    comm.Barrier()
+    comm.Reduce(c, sum, op=MPI.SUM, root=0)
     
-    sum = np.sum(c)
+    sum = sum[0]
     
-    end_time = time.time()
+    end_time = MPI.Wtime()
     elapsed_time = end_time - start_time
         
     return sum, elapsed_time
