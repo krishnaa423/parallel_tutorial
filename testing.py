@@ -1,7 +1,6 @@
 
-
 #region: Variables.
-array_size = int(100e6)
+array_size = int(10e6)
 task_sizes = [1, 2, 3, 4, 5, 6, 7, 8]
 #endregion
 
